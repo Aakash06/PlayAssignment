@@ -37,8 +37,8 @@ class HomeController extends Controller {
 
   def action2()= Action{ implicit request: Request[AnyContent] =>
           request.session.get("user").map(value=>
-            Ok(request.flash.get("success").getOrElse("No user found "))
-          ).getOrElse(Unauthorized("Oops : No user"))
+            Ok(request.flash.get("success").getOrElse("Error No user found "))
+          ).getOrElse(Unauthorized("No Session"))
   }
 
   def action3(user: String) = Action{
