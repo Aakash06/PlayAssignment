@@ -1,7 +1,7 @@
-@(message: String)
-@main("Welcome!") {
+@()(implicit flash: Flash)
 
-    <h1>I see this is the first time you open this page on this browser session.</h1>
-    <p>@message</p>
-
+@main("Welcome to Play") {
+<h1>Welcome to Play Session!</h1>
+<h3>@flash.get("success")</h3>
+<h3>@flash.get("error")</h3>
 }

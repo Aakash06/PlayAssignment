@@ -32,18 +32,29 @@ class HomeController extends Controller {
     Result(
       header = ResponseHeader(200,Map(CONTENT_TYPE -> "text/plain")),
       body = HttpEntity.Strict.apply(ByteString(s"Hello Everyone"),Some("text/plain"))
-    ).withSession("user"-> "Session Started")
+    ).withSession("user"-> "aakash")
   }
 
-  def action2()= Action{ implicit request: Request[AnyContent] =>
-          request.session.get("user").map(value=>
-            Ok(request.flash.get("success").getOrElse("Error No user found "))
-          ).getOrElse(Unauthorized("No Session"))
+  def action2() = Action{
+    implicit request => Ok(views.html.firstVisit())
   }
 
-  def action3(user: String) = Action{
-    Redirect(routes.HomeController.action2()).flashing(
-      "success" -> s"There is $user named users")
-  }
+  def action3() = Action{
+    request =>
+      val userName = request.session.get("user")
 
+      val (key, value) = userName match {
+        case Some(user) => if (user.equalsIgnoreCase("aakash")) {
+          ("success", s"Hello Aakash")
+        }
+        else
+        {
+          ("error", "No session by this name")
+        }
+        case None => ("error", "No User/Session Found")
+      }
+
+      Redirect(routes.HomeController.action2()).flashing(key -> value)
+
+  }
 }
