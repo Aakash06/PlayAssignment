@@ -4,9 +4,9 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /assignment/user/:user                        controllers.HomeController.action3(user: String)
-GET     /                                               controllers.HomeController.index()
-GET     /assignment/                                    controllers.HomeController.action2()
+GET     /dashboard/:user                     controllers.HomeController.check(user: String)
+GET     /:user                                  controllers.HomeController.index(user : String)
+GET     /                                    controllers.HomeController.action()
 
 
 # Map static resources from the /public folder to the /assets URL path
